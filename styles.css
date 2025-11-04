@@ -617,9 +617,83 @@ html {
     box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
 }
 
-/* Share Modal Styles */
-.bg-gradient-primary {
-    background: var(--medical-gradient) !important;
+/* Enhanced Share Modal Styles */
+.share-modal-enhanced {
+    border-radius: 25px !important;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.share-modal-header {
+    background: linear-gradient(135deg, #1E88E5 0%, #00ACC1 100%);
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+}
+
+.share-icon-circle {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    backdrop-filter: blur(10px);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.share-icon-circle i {
+    font-size: 2rem;
+    color: white;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.impact-stats-banner {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(30, 136, 229, 0.1) 0%, rgba(0, 172, 193, 0.1) 100%);
+    border-radius: 15px;
+    border: 2px solid rgba(30, 136, 229, 0.2);
+}
+
+.impact-stat-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.impact-stat-item i {
+    font-size: 2rem;
+    color: var(--medical-blue);
+}
+
+.impact-stat-item strong {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--dark);
+}
+
+.impact-stat-item span {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--secondary);
+}
+
+.share-alert {
+    background: linear-gradient(135deg, #E3F2FD 0%, #B3E5FC 100%);
+    border-left: 4px solid var(--medical-blue);
 }
 
 .message-options {
@@ -629,30 +703,304 @@ html {
 }
 
 .message-card {
-    padding: 1rem;
+    padding: 1.5rem;
     border: 2px solid #E5E7EB;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
+    background: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.message-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--medical-gradient);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
 }
 
 .message-card:hover {
-    border-color: var(--primary);
-    background: rgba(0, 102, 255, 0.05);
+    border-color: var(--medical-blue);
+    background: rgba(30, 136, 229, 0.05);
+    transform: translateX(5px);
+}
+
+.message-card:hover::before {
+    transform: scaleY(1);
 }
 
 .message-card.active {
-    border-color: var(--primary);
-    background: rgba(0, 102, 255, 0.1);
+    border-color: var(--medical-blue);
+    background: linear-gradient(135deg, rgba(30, 136, 229, 0.1) 0%, rgba(0, 172, 193, 0.1) 100%);
+    box-shadow: 0 8px 25px rgba(30, 136, 229, 0.2);
+}
+
+.message-card.active::before {
+    transform: scaleY(1);
 }
 
 .message-card .form-check-input:checked {
-    background-color: var(--primary);
-    border-color: var(--primary);
+    background-color: var(--medical-blue);
+    border-color: var(--medical-blue);
 }
 
 .message-card label {
     cursor: pointer;
+}
+
+.btn-copy-message {
+    background: linear-gradient(135deg, #1E88E5 0%, #00ACC1 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(30, 136, 229, 0.3);
+}
+
+.btn-copy-message:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(30, 136, 229, 0.4);
+    color: white;
+}
+
+.share-divider {
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+}
+
+.share-divider::before,
+.share-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #E5E7EB, transparent);
+}
+
+.share-divider::before {
+    left: 0;
+}
+
+.share-divider::after {
+    right: 0;
+}
+
+.share-divider span {
+    background: white;
+    padding: 0 1rem;
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.social-share-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.social-share-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.5rem 1rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 15px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.social-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.social-share-btn.facebook .social-icon {
+    background: #1877F2;
+    color: white;
+}
+
+.social-share-btn.facebook:hover {
+    border-color: #1877F2;
+    background: rgba(24, 119, 242, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(24, 119, 242, 0.2);
+}
+
+.social-share-btn.twitter .social-icon {
+    background: #1DA1F2;
+    color: white;
+}
+
+.social-share-btn.twitter:hover {
+    border-color: #1DA1F2;
+    background: rgba(29, 161, 242, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(29, 161, 242, 0.2);
+}
+
+.social-share-btn.whatsapp .social-icon {
+    background: #25D366;
+    color: white;
+}
+
+.social-share-btn.whatsapp:hover {
+    border-color: #25D366;
+    background: rgba(37, 211, 102, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.2);
+}
+
+.social-share-btn.linkedin .social-icon {
+    background: #0A66C2;
+    color: white;
+}
+
+.social-share-btn.linkedin:hover {
+    border-color: #0A66C2;
+    background: rgba(10, 102, 194, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(10, 102, 194, 0.2);
+}
+
+.social-share-btn.telegram .social-icon {
+    background: #0088cc;
+    color: white;
+}
+
+.social-share-btn.telegram:hover {
+    border-color: #0088cc;
+    background: rgba(0, 136, 204, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 136, 204, 0.2);
+}
+
+.social-share-btn.instagram .social-icon {
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+    color: white;
+}
+
+.social-share-btn.instagram:hover {
+    border-color: #e6683c;
+    background: rgba(230, 104, 60, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(230, 104, 60, 0.2);
+}
+
+.hashtags-section-enhanced {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+    border-radius: 15px;
+    border: 2px solid #E5E7EB;
+}
+
+.hashtags-title {
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.hashtags-grid-enhanced {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.hashtag-badge {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #1E88E5 0%, #00ACC1 100%);
+    color: white;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hashtag-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(30, 136, 229, 0.3);
+}
+
+.btn-copy-hashtags {
+    width: 100%;
+    padding: 0.75rem;
+    background: white;
+    border: 2px solid var(--medical-blue);
+    color: var(--medical-blue);
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-copy-hashtags:hover {
+    background: var(--medical-blue);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.share-footer-message {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+    border-radius: 15px;
+    border-left: 4px solid var(--health-green);
+    text-align: center;
+}
+
+.share-footer-message i {
+    font-size: 1.5rem;
+    color: var(--health-green);
+    margin-bottom: 0.5rem;
+}
+
+.share-footer-message p {
+    margin: 0;
+    color: var(--dark);
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .social-share-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .impact-stats-banner {
+        flex-direction: column;
+    }
+    
+    .hashtags-grid-enhanced {
+        justify-content: center;
+    }
 }
 
 /* Social Media Buttons */
