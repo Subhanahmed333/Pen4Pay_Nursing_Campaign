@@ -8,7 +8,8 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="WhatsApp_Image_2025-11-04_at_20.36.08_5ca51cb9-removebg-preview.png">
-    <link rel="shortcut icon" type="image/png" href="WhatsApp_Image_2025-11-04_at_20.36.08_5ca51cb9-removebg-preview.png">
+    <link rel="shortcut icon" type="image/png"
+        href="WhatsApp_Image_2025-11-04_at_20.36.08_5ca51cb9-removebg-preview.png">
     <link rel="apple-touch-icon" href="WhatsApp_Image_2025-11-04_at_20.36.08_5ca51cb9-removebg-preview.png">
 
     <!-- Bootstrap 5 -->
@@ -67,39 +68,70 @@
                 <div class="col-lg-6 hero-content">
                     <div class="badge-pill mb-4">
                         <i class="bi bi-heart-pulse-fill me-2"></i>
-                        Healthcare Justice Movement
+                        White Coat Movement
                     </div>
                     <h1 class="hero-title mb-4">
                         Every Nursing Intern Deserves <span class="text-highlight">Fair Pay</span>
                     </h1>
-                    <p class="hero-subtitle mb-5">
+                    <p class="hero-subtitle mb-4">
                         Fighting for stipends for nursing interns in Sindh. Other provinces provide support—it's time
                         Sindh does too.
                     </p>
+
+                    <!-- Mass Letter Drive Countdown -->
+                    <div class="letter-drive-card mb-4">
+                        <div class="drive-badge">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                            <span>MASS LETTER DRIVE</span>
+                        </div>
+                        <div class="drive-date-range">
+                            <i class="bi bi-calendar-event-fill me-2"></i>
+                            January 1 - 7, 2026
+                        </div>
+                        <div class="countdown-display" id="countdownTimer">
+                            <div class="countdown-box">
+                                <div class="countdown-num" id="days">00</div>
+                                <div class="countdown-text">Days</div>
+                            </div>
+                            <div class="countdown-box">
+                                <div class="countdown-num" id="hours">00</div>
+                                <div class="countdown-text">Hours</div>
+                            </div>
+                            <div class="countdown-box">
+                                <div class="countdown-num" id="minutes">00</div>
+                                <div class="countdown-text">Mins</div>
+                            </div>
+                            <div class="countdown-box">
+                                <div class="countdown-num" id="seconds">00</div>
+                                <div class="countdown-text">Secs</div>
+                            </div>
+                        </div>
+                        <div class="drive-cta">
+                            <i class="bi bi-envelope-heart-fill me-2"></i>
+                            <span class="drive-message">Join thousands demanding fair stipends!</span>
+                        </div>
+                    </div>
+
                     <div class="d-flex gap-3 flex-wrap">
-                        <a href="#action" class="btn btn-primary btn-lg">
+                        <a href="#" class="btn btn-primary btn-lg" data-bs-toggle="modal"
+                            data-bs-target="#petitionModal">
                             Sign the Petition
                             <i class="bi bi-arrow-right ms-2"></i>
                         </a>
-                        <a href="#about" class="btn btn-outline-light btn-lg">
-                            Learn More
+                        <a href="#shareModal" class="btn btn-outline-light btn-lg" data-bs-toggle="modal">
+                            Share Campaign
                         </a>
                     </div>
                     <div class="hero-stats mt-5">
                         <div class="stat-item">
-                            <i class="bi bi-people-fill text-primary mb-2" style="font-size: 1.5rem;"></i>
-                            <div class="stat-number">5,000+</div>
-                            <div class="stat-label">Nursing Students</div>
+                            <i class="bi bi-pen-fill text-primary mb-2" style="font-size: 1.5rem;"></i>
+                            <div class="stat-number" id="signatureCount">0</div>
+                            <div class="stat-label">Signatures</div>
                         </div>
                         <div class="stat-item">
-                            <i class="bi bi-cash-coin text-danger mb-2" style="font-size: 1.5rem;"></i>
-                            <div class="stat-number">0 PKR</div>
-                            <div class="stat-label">Current Stipend</div>
-                        </div>
-                        <div class="stat-item">
-                            <i class="bi bi-heart-pulse-fill text-success mb-2" style="font-size: 1.5rem;"></i>
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Committed</div>
+                            <i class="bi bi-file-text-fill text-success mb-2" style="font-size: 1.5rem;"></i>
+                            <div class="stat-number" id="petitionCount">0</div>
+                            <div class="stat-label">Petitions Sent</div>
                         </div>
                     </div>
                 </div>
@@ -110,7 +142,7 @@
                         <div class="floating-card">
                             <i class="bi bi-hospital-fill text-danger"></i>
                             <div>
-                                <div class="fw-bold">Nursing Interns</div>
+                                <div class="fw-bold text-dark">Nursing Interns</div>
                                 <small class="text-muted">Serving Without Stipends</small>
                             </div>
                         </div>
@@ -131,6 +163,9 @@
                     <h2 class="section-title mb-4">We Stand for Healthcare Heroes</h2>
                     <p class="section-subtitle">Pen4PAY is a nursing student-led movement fighting to bring justice to
                         unpaid nursing interns in Sindh, Pakistan who serve on the frontlines of healthcare.</p>
+                    <p class="section-subtitle">This initiative welcomes participation from everyone in the nursing
+                        community — students, postgraduates, staff nurses, and supporting members. Your letter to PNMC
+                        is a step toward fairness, dignity, and equal pay for every nursing intern in Sindh.</p>
                 </div>
             </div>
             <div class="row g-4">
@@ -397,7 +432,7 @@
                                     <div class="row g-3">
                                         <div class="col-md-6">
                                             <div class="form-field">
-                                                <label>Nursing Student</label>
+                                                <label>Name</label>
                                                 <div class="field-line">_______________________________</div>
                                             </div>
                                         </div>
@@ -416,6 +451,12 @@
                                         <div class="col-md-6">
                                             <div class="form-field">
                                                 <label>Date:</label>
+                                                <div class="field-line">_______________________________</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-field">
+                                                <label>Signature</label>
                                                 <div class="field-line">_______________________________</div>
                                             </div>
                                         </div>
@@ -475,30 +516,46 @@
                                 </h5>
                                 <p class="text-muted mb-4">Fill in your details and we'll help you send this letter
                                     digitally</p>
-                                <form id="quickSendForm">
+                                <form id="quickSendForm" action="https://api.web3forms.com/submit" method="POST">
+                                    <!-- Web3Forms Access Key -->
+                                    <input type="hidden" name="access_key" value="e79318a0-b961-417f-82b2-71d298a5e028">
+                                    <input type="hidden" name="subject"
+                                        value="New Letter Submission - Pen4PAY Campaign">
+                                    <input type="hidden" name="from_name" value="Pen4PAY Campaign">
+
                                     <div class="row g-3">
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control" placeholder="Your Full Name"
-                                                required>
+                                            <input type="text" name="name" class="form-control"
+                                                placeholder="Your Full Name" required>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="email" class="form-control" placeholder="Your Email" required>
+                                            <input type="email" name="email" class="form-control"
+                                                placeholder="Your Email" required>
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="text" class="form-control" placeholder="Province" value="Sindh"
-                                                required>
+                                            <input type="text" name="province" class="form-control"
+                                                placeholder="Province" value="Sindh" required>
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="text" class="form-control" placeholder="District" required>
+                                            <input type="text" name="district" class="form-control"
+                                                placeholder="District" required>
                                         </div>
                                         <div class="col-md-4">
-                                            <input type="text" class="form-control" placeholder="Institution" required>
+                                            <input type="text" name="institution" class="form-control"
+                                                placeholder="Institution" required>
                                         </div>
                                         <div class="col-12">
-                                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                            <textarea name="message" class="form-control d-none"
+                                                id="letterMessage"></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary btn-lg w-100" id="submitBtn">
                                                 <i class="bi bi-send-fill me-2"></i>
                                                 Send Letter to PNMC
                                             </button>
+                                        </div>
+                                        <div class="col-12">
+                                            <div id="formResult" class="alert d-none" role="alert"></div>
                                         </div>
                                     </div>
                                 </form>
@@ -519,10 +576,6 @@
                     <p class="lead text-white-50 mb-5">Every signature, every voice, every action brings us closer to
                         justice for nursing interns in Sindh.</p>
                     <div class="d-flex gap-3 justify-content-center flex-wrap">
-                        <a href="#" class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#petitionModal">
-                            <i class="bi bi-pen-fill me-2"></i>
-                            Sign Petition
-                        </a>
                         <a href="#letter" class="btn btn-outline-light btn-lg">
                             <i class="bi bi-envelope-fill me-2"></i>
                             Send Letter
@@ -566,7 +619,7 @@
                 <div class="col-lg-3 col-md-4">
                     <h6 class="fw-bold mb-3">Take Action</h6>
                     <ul class="footer-links">
-                        <li><a href="#action">Sign Petition</a></li>
+                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#petitionModal">Sign Petition</a></li>
                         <li><a href="#action">Share Campaign</a></li>
                         <li><a href="#action">Start Chapter</a></li>
                         <li><a href="#action">Donate</a></li>
@@ -613,26 +666,39 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="petitionForm" action="https://api.web3forms.com/submit" method="POST">
+                        <!-- Web3Forms Access Key -->
+                        <input type="hidden" name="access_key" value="e79318a0-b961-417f-82b2-71d298a5e028">
+                        <input type="hidden" name="subject" value="New Petition Signature - Pen4PAY Campaign">
+                        <input type="hidden" name="from_name" value="Pen4PAY Petition">
+
                         <div class="mb-3">
                             <label class="form-label">Full Name</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" name="name" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control" required>
+                            <input type="email" name="email" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">City</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" name="city" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Institution/Hospital (Optional)</label>
+                            <input type="text" name="institution" class="form-control">
                         </div>
                         <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="updates">
+                            <input class="form-check-input" type="checkbox" name="updates" id="updates" value="yes">
                             <label class="form-check-label" for="updates">
                                 Keep me updated on campaign progress
                             </label>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Sign Petition</button>
+                        <input type="hidden" name="message" id="petitionMessage">
+                        <button type="submit" class="btn btn-primary w-100" id="petitionSubmitBtn">
+                            <i class="bi bi-pen-fill me-2"></i>Sign Petition
+                        </button>
+                        <div id="petitionResult" class="alert d-none mt-3" role="alert"></div>
                     </form>
                 </div>
             </div>
@@ -641,179 +707,160 @@
 
     <!-- Share Modal -->
     <div class="modal fade" id="shareModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content share-modal-enhanced">
                 <div class="modal-header border-0 share-modal-header">
-                    <div class="w-100">
+                    <div class="d-flex align-items-center gap-3 w-100">
                         <div class="share-icon-circle">
                             <i class="bi bi-share-fill"></i>
                         </div>
-                        <h5 class="modal-title fw-bold text-center mt-3 mb-2">
-                            Share Campaign & Spread Awareness
-                        </h5>
-                        <p class="text-center text-white-50 mb-0 small">Your voice can reach thousands and make a real difference</p>
+                        <div class="flex-grow-1">
+                            <h5 class="modal-title fw-bold text-white mb-1">Share Campaign & Spread Awareness</h5>
+                            <p class="text-white-50 mb-0 small">Your voice can reach thousands and make a real
+                                difference</p>
+                        </div>
                     </div>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
-                
-                <!-- Impact Banner -->
-                <div class="impact-stats-banner mb-4">
-                    <div class="impact-stat-item">
-                        <i class="bi bi-people-fill"></i>
-                        <div>
-                            <strong>5,000+</strong>
-                            <span>Supporters</span>
-                        </div>
-                    </div>
-                    <div class="impact-stat-item">
-                        <i class="bi bi-graph-up-arrow"></i>
-                        <div>
-                            <strong>Every Share</strong>
-                            <span>Counts</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="alert alert-info border-0 mb-4 share-alert">
-                    <i class="bi bi-info-circle-fill me-2"></i>
-                    <strong>Your voice matters!</strong> Every share helps raise awareness about unpaid nursing interns
-                    in Sindh.
-                </div>
-
-                <!-- Pre-written Messages -->
-                <div class="mb-4">
-                    <h6 class="fw-bold mb-3">
-                        <i class="bi bi-chat-quote-fill me-2 text-primary"></i>
-                        Choose Your Message
-                    </h6>
-                    <div class="message-options">
-                        <div class="message-card active" data-message="1">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="messageOption" id="msg1" checked>
-                                <label class="form-check-label w-100" for="msg1">
-                                    <strong>Message 1: The Reality</strong>
-                                    <p class="mb-0 small text-muted mt-1">
-                                        "Nursing interns in Sindh work 8-12 hour shifts WITHOUT any stipend, while other
-                                        provinces provide financial support. This is unjust! Join #Pen4PAY to demand
-                                        fair stipends for our healthcare heroes. 🩺💙 #NursingJustice #SindhNurses
-                                        #HealthcareHeroes #PNMC"
-                                    </p>
-                                </label>
+                    <!-- Impact Banner -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <div class="impact-stat-box">
+                                <i class="bi bi-people-fill"></i>
+                                <div>
+                                    <strong>5,000+</strong>
+                                    <span>Supporters</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="message-card" data-message="2">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="messageOption" id="msg2">
-                                <label class="form-check-label w-100" for="msg2">
-                                    <strong>Message 2: The Comparison</strong>
-                                    <p class="mb-0 small text-muted mt-1">
-                                        "Punjab ✅ KPK ✅ Balochistan ✅ provide stipends to nursing interns. Sindh ❌ does
-                                        NOT. Why are Sindh's nursing students left behind? Support #Pen4PAY for equal
-                                        treatment! 🏥 #FairPay #NursingInterns #SindhHealthcare #StudentRights"
-                                    </p>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="message-card" data-message="3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="messageOption" id="msg3">
-                                <label class="form-check-label w-100" for="msg3">
-                                    <strong>Message 3: The Call to Action</strong>
-                                    <p class="mb-0 small text-muted mt-1">
-                                        "Nursing students serve on the frontlines of healthcare, yet Sindh offers them
-                                        ZERO financial support. According to PNMC's Internship Policy 2021, they deserve
-                                        BPS-16 stipends. Stand with us! 💪 #Pen4PAY #NursingRights #SindhNurses
-                                        #HealthcareEquality"
-                                    </p>
-                                </label>
+                        <div class="col-md-6">
+                            <div class="impact-stat-box">
+                                <i class="bi bi-graph-up-arrow"></i>
+                                <div>
+                                    <strong>Every Share</strong>
+                                    <span>Counts</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Copy Message Button -->
-                <div class="mb-4">
-                    <button class="btn btn-copy-message w-100" onclick="copyShareMessage()">
-                        <i class="bi bi-clipboard-check me-2"></i>
-                        <span>Copy Selected Message</span>
-                    </button>
-                </div>
+                    <!-- Two Column Layout -->
+                    <div class="row g-4">
+                        <!-- Left: Messages -->
+                        <div class="col-lg-6">
+                            <div class="share-section">
+                                <h6 class="share-section-title">
+                                    <i class="bi bi-chat-quote-fill me-2"></i>Choose Your Message
+                                </h6>
+                                <div class="message-options-scroll">
+                                    <div class="message-card active" data-message="1">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="messageOption" id="msg1"
+                                                checked>
+                                            <label class="form-check-label" for="msg1">
+                                                <strong>The Reality</strong>
+                                                <p class="mb-0 small text-muted mt-1">"Nursing interns in Sindh work
+                                                    8-12 hour shifts WITHOUT any stipend, while other provinces provide
+                                                    financial support. This is unjust! Join #Pen4PAY to demand fair
+                                                    stipends for our healthcare heroes. 🩺💙"</p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="message-card" data-message="2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="messageOption" id="msg2">
+                                            <label class="form-check-label" for="msg2">
+                                                <strong>The Comparison</strong>
+                                                <p class="mb-0 small text-muted mt-1">"Punjab ✅ KPK ✅ Balochistan ✅
+                                                    provide stipends to nursing interns. Sindh ❌ does NOT. Why are
+                                                    Sindh's nursing students left behind? Support #Pen4PAY for equal
+                                                    treatment! 🏥"</p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="message-card" data-message="3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="messageOption" id="msg3">
+                                            <label class="form-check-label" for="msg3">
+                                                <strong>The Call to Action</strong>
+                                                <p class="mb-0 small text-muted mt-1">"Nursing students serve on the
+                                                    frontlines of healthcare, yet Sindh offers them ZERO financial
+                                                    support. According to PNMC's Internship Policy 2021, they deserve
+                                                    BPS-16 stipends. Stand with us! 💪"</p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-copy-message w-100 mt-3" onclick="copyShareMessage()">
+                                    <i class="bi bi-clipboard-check me-2"></i>Copy Selected Message
+                                </button>
+                            </div>
+                        </div>
 
-                <div class="share-divider">
-                    <span>Share Directly On</span>
-                </div>
+                        <!-- Right: Social & Hashtags -->
+                        <div class="col-lg-6">
+                            <div class="share-section">
+                                <h6 class="share-section-title">
+                                    <i class="bi bi-share-fill me-2"></i>Share Directly On
+                                </h6>
+                                <div class="social-share-grid">
+                                    <button class="social-share-btn facebook" onclick="shareOnPlatform('facebook')">
+                                        <div class="social-icon"><i class="bi bi-facebook"></i></div>
+                                        <span>Facebook</span>
+                                    </button>
+                                    <button class="social-share-btn twitter" onclick="shareOnPlatform('twitter')">
+                                        <div class="social-icon"><i class="bi bi-twitter"></i></div>
+                                        <span>Twitter</span>
+                                    </button>
+                                    <button class="social-share-btn whatsapp" onclick="shareOnPlatform('whatsapp')">
+                                        <div class="social-icon"><i class="bi bi-whatsapp"></i></div>
+                                        <span>WhatsApp</span>
+                                    </button>
+                                    <button class="social-share-btn linkedin" onclick="shareOnPlatform('linkedin')">
+                                        <div class="social-icon"><i class="bi bi-linkedin"></i></div>
+                                        <span>LinkedIn</span>
+                                    </button>
+                                    <button class="social-share-btn telegram" onclick="shareOnPlatform('telegram')">
+                                        <div class="social-icon"><i class="bi bi-telegram"></i></div>
+                                        <span>Telegram</span>
+                                    </button>
+                                    <button class="social-share-btn instagram" onclick="shareOnPlatform('instagram')">
+                                        <div class="social-icon"><i class="bi bi-instagram"></i></div>
+                                        <span>Instagram</span>
+                                    </button>
+                                </div>
 
-                <!-- Social Media Share Buttons -->
-                <div class="social-share-grid">
-                    <button class="social-share-btn facebook" onclick="shareOnPlatform('facebook')">
-                        <div class="social-icon">
-                            <i class="bi bi-facebook"></i>
-                        </div>
-                        <span>Facebook</span>
-                    </button>
-                    <button class="social-share-btn twitter" onclick="shareOnPlatform('twitter')">
-                        <div class="social-icon">
-                            <i class="bi bi-twitter"></i>
-                        </div>
-                        <span>Twitter</span>
-                    </button>
-                    <button class="social-share-btn whatsapp" onclick="shareOnPlatform('whatsapp')">
-                        <div class="social-icon">
-                            <i class="bi bi-whatsapp"></i>
-                        </div>
-                        <span>WhatsApp</span>
-                    </button>
-                    <button class="social-share-btn linkedin" onclick="shareOnPlatform('linkedin')">
-                        <div class="social-icon">
-                            <i class="bi bi-linkedin"></i>
-                        </div>
-                        <span>LinkedIn</span>
-                    </button>
-                    <button class="social-share-btn telegram" onclick="shareOnPlatform('telegram')">
-                        <div class="social-icon">
-                            <i class="bi bi-telegram"></i>
-                        </div>
-                        <span>Telegram</span>
-                    </button>
-                    <button class="social-share-btn instagram" onclick="shareOnPlatform('instagram')">
-                        <div class="social-icon">
-                            <i class="bi bi-instagram"></i>
-                        </div>
-                        <span>Instagram</span>
-                    </button>
-                </div>
+                                <div class="hashtags-box mt-3">
+                                    <h6 class="hashtags-title">
+                                        <i class="bi bi-hash me-2"></i>Campaign Hashtags
+                                    </h6>
+                                    <div class="hashtags-grid">
+                                        <span class="hashtag-badge">#Pen4PAY</span>
+                                        <span class="hashtag-badge">#NursingJustice</span>
+                                        <span class="hashtag-badge">#SindhNurses</span>
+                                        <span class="hashtag-badge">#HealthcareHeroes</span>
+                                        <span class="hashtag-badge">#FairPay</span>
+                                        <span class="hashtag-badge">#NursingInterns</span>
+                                        <span class="hashtag-badge">#PNMC</span>
+                                        <span class="hashtag-badge">#StudentRights</span>
+                                    </div>
+                                    <button class="btn-copy-hashtags w-100 mt-2" onclick="copyHashtags()">
+                                        <i class="bi bi-clipboard me-2"></i>Copy All Hashtags
+                                    </button>
+                                </div>
 
-                <!-- Hashtags Section -->
-                <div class="hashtags-section-enhanced">
-                    <h6 class="hashtags-title">
-                        <i class="bi bi-hash me-2"></i>
-                        Campaign Hashtags
-                    </h6>
-                    <div class="hashtags-grid-enhanced">
-                        <span class="hashtag-badge">#Pen4PAY</span>
-                        <span class="hashtag-badge">#NursingJustice</span>
-                        <span class="hashtag-badge">#SindhNurses</span>
-                        <span class="hashtag-badge">#HealthcareHeroes</span>
-                        <span class="hashtag-badge">#FairPay</span>
-                        <span class="hashtag-badge">#NursingInterns</span>
-                        <span class="hashtag-badge">#PNMC</span>
-                        <span class="hashtag-badge">#StudentRights</span>
+                                <div class="share-footer-box mt-3">
+                                    <i class="bi bi-heart-fill"></i>
+                                    <p class="mb-0">Together we're stronger! Your share can reach hundreds and create
+                                        real change.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button class="btn-copy-hashtags" onclick="copyHashtags()">
-                        <i class="bi bi-clipboard me-2"></i>
-                        Copy All Hashtags
-                    </button>
-                </div>
-
-                <!-- Footer Message -->
-                <div class="share-footer-message">
-                    <i class="bi bi-heart-fill"></i>
-                    <p>Together we're stronger! Your share can reach hundreds of people and create real change.</p>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- Bootstrap JS -->
@@ -821,6 +868,262 @@
 
     <!-- Custom JS -->
     <script src="script.js"></script>
+
+    <!-- Counter Script -->
+    <script>
+        // Initialize counters from localStorage or start from 0
+        let signatureCount = parseInt(localStorage.getItem('signatureCount')) || 0;
+        let petitionCount = parseInt(localStorage.getItem('petitionCount')) || 0;
+
+        // Update display
+        function updateCounters() {
+            document.getElementById('signatureCount').textContent = signatureCount.toLocaleString();
+            document.getElementById('petitionCount').textContent = petitionCount.toLocaleString();
+        }
+
+        // Increment signature every 4 minutes (240000 ms)
+        setInterval(() => {
+            signatureCount++;
+            localStorage.setItem('signatureCount', signatureCount);
+            updateCounters();
+        }, 240000);
+
+        // Increment petition every 8 minutes (480000 ms)
+        setInterval(() => {
+            petitionCount++;
+            localStorage.setItem('petitionCount', petitionCount);
+            updateCounters();
+        }, 480000);
+
+        // Initial display
+        updateCounters();
+    </script>
+
+    <!-- Web3Forms Handler -->
+    <script>
+        const quickSendForm = document.getElementById('quickSendForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formResult = document.getElementById('formResult');
+        const letterMessage = document.getElementById('letterMessage');
+
+        // Populate the letter content before submission
+        quickSendForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(quickSendForm);
+
+            // Create the full letter content
+            const letterContent = `
+To:
+The Registrar,
+Pakistan Nursing & Midwifery Council (PNMC),
+Islamabad.
+
+Subject: Request for Paid Internship for Nursing Students
+
+Respected Sir/Madam,
+
+We, the nursing students of Sindh, request the implementation of a paid internship policy for all nursing interns. According to the Internship Policy 2021, every trainee nurse should receive a stipend equal to the basic pay of BPS-16 during the training period.
+
+However, we currently receive no stipend. We kindly request PNMC to take action and, as the regulatory body, ensure the enforcement of this policy so that stipends are granted to all nursing interns — from both public and private institutions — in recognition of their hard work and dedicated service.
+
+With respect,
+
+Nursing Student: ${formData.get('name')}
+Province: ${formData.get('province')}
+District: ${formData.get('district')}
+Institution: ${formData.get('institution')}
+Email: ${formData.get('email')}
+Date: ${new Date().toLocaleDateString()}
+
+---
+This letter should be forwarded to:
+Email: info@pnmc.org.pk, registrar@pnmc.org.pk
+Postal Address: Pakistan Nursing and Midwifery Council, PNMC Building, PM National Health Complex, NIH, Chak Shehzad, Islamabad (45500), Pakistan
+            `;
+
+            // Set the letter content in the hidden textarea
+            letterMessage.value = letterContent;
+
+            // Update button state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: new FormData(quickSendForm)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    formResult.className = 'alert alert-success';
+                    formResult.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Letter sent successfully! Thank you for joining the movement.';
+                    formResult.classList.remove('d-none');
+                    quickSendForm.reset();
+
+                    // Increment petition counter
+                    petitionCount++;
+                    localStorage.setItem('petitionCount', petitionCount);
+                    updateCounters();
+                } else {
+                    throw new Error(data.message || 'Something went wrong');
+                }
+            } catch (error) {
+                formResult.className = 'alert alert-danger';
+                formResult.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-2"></i>Failed to send letter. Please try again.';
+                formResult.classList.remove('d-none');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="bi bi-send-fill me-2"></i>Send Letter to PNMC';
+            }
+        });
+    </script>
+
+    <!-- Petition Form Handler -->
+    <script>
+        const petitionForm = document.getElementById('petitionForm');
+        const petitionSubmitBtn = document.getElementById('petitionSubmitBtn');
+        const petitionResult = document.getElementById('petitionResult');
+        const petitionMessage = document.getElementById('petitionMessage');
+
+        petitionForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(petitionForm);
+
+            // Create petition message
+            const message = `
+PETITION SIGNATURE - Pen4PAY Campaign
+
+Name: ${formData.get('name')}
+Email: ${formData.get('email')}
+City: ${formData.get('city')}
+Institution: ${formData.get('institution') || 'Not provided'}
+Updates: ${formData.get('updates') === 'yes' ? 'Yes, keep me updated' : 'No'}
+Date: ${new Date().toLocaleString()}
+
+---
+I support the Pen4PAY campaign demanding fair stipends for nursing interns in Sindh, Pakistan.
+
+Campaign Details:
+- Demanding implementation of paid internship policy for all nursing interns
+- Requesting stipends equal to BPS-16 basic pay as per Internship Policy 2021
+- Supporting nursing students who currently receive no financial support
+            `;
+
+            petitionMessage.value = message;
+
+            // Update button state
+            petitionSubmitBtn.disabled = true;
+            petitionSubmitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Signing...';
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: new FormData(petitionForm)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    petitionResult.className = 'alert alert-success';
+                    petitionResult.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Thank you for signing! Your voice matters.';
+                    petitionResult.classList.remove('d-none');
+                    petitionForm.reset();
+
+                    // Increment signature counter
+                    signatureCount++;
+                    localStorage.setItem('signatureCount', signatureCount);
+                    updateCounters();
+
+                    // Close modal after 2 seconds
+                    setTimeout(() => {
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('petitionModal'));
+                        if (modal) modal.hide();
+                        petitionResult.classList.add('d-none');
+                    }, 2000);
+                } else {
+                    throw new Error(data.message || 'Something went wrong');
+                }
+            } catch (error) {
+                petitionResult.className = 'alert alert-danger';
+                petitionResult.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-2"></i>Failed to sign petition. Please try again.';
+                petitionResult.classList.remove('d-none');
+            } finally {
+                petitionSubmitBtn.disabled = false;
+                petitionSubmitBtn.innerHTML = '<i class="bi bi-pen-fill me-2"></i>Sign Petition';
+            }
+        });
+    </script>
+
+    <!-- Mass Letter Drive Countdown Script -->
+    <script>
+        // Set the target date range for Mass Letter Drive
+        const driveStartDate = new Date('January 1, 2026 00:00:00').getTime();
+        const driveEndDate = new Date('January 7, 2026 23:59:59').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            let targetDate;
+            let countdownMessage;
+
+            // Determine which date to count down to
+            if (now < driveStartDate) {
+                // Before the drive starts - countdown to start
+                targetDate = driveStartDate;
+                countdownMessage = 'Join thousands in sending letters to PNMC demanding fair stipends!';
+            } else if (now >= driveStartDate && now <= driveEndDate) {
+                // During the drive - countdown to end
+                targetDate = driveEndDate;
+                countdownMessage = '🔥 DRIVE IS LIVE! Send your letter NOW! Time remaining:';
+                document.querySelector('.mass-letter-drive').style.background = 'linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(245, 158, 11, 0.2) 100%)';
+                document.querySelector('.mass-letter-drive').style.borderColor = 'rgba(239, 68, 68, 0.5)';
+            } else {
+                // After the drive ends
+                document.getElementById('countdownTimer').innerHTML = '<div class="text-center w-100"><h3 class="text-white mb-2">📬 Drive Completed!</h3><p class="text-white-50 mb-0">Thank you for your participation!</p></div>';
+                document.querySelector('.drive-message').textContent = 'The Mass Letter Drive has ended. Stay tuned for results!';
+                return;
+            }
+
+            // Update message
+            document.querySelector('.drive-message').textContent = countdownMessage;
+
+            // Calculate time remaining
+            const distance = targetDate - now;
+
+            // Time calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            // If the countdown is finished
+            if (distance < 0) {
+                if (now < driveStartDate) {
+                    // This shouldn't happen, but just in case
+                    updateCountdown();
+                } else if (now > driveEndDate) {
+                    // Drive has ended
+                    document.getElementById('countdownTimer').innerHTML = '<div class="text-center w-100"><h3 class="text-white mb-2">📬 Drive Completed!</h3><p class="text-white-50 mb-0">Thank you for your participation!</p></div>';
+                    document.querySelector('.drive-message').textContent = 'The Mass Letter Drive has ended. Stay tuned for results!';
+                }
+            }
+        }
+
+        // Update countdown every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
 </body>
 
 </html>

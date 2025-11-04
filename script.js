@@ -31,33 +31,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Form submission handlers
-document.addEventListener('DOMContentLoaded', function() {
-    // Petition form
-    const petitionForm = document.querySelector('#petitionModal form');
-    if (petitionForm) {
-        petitionForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Show success message
-            const modalBody = this.closest('.modal-body');
-            modalBody.innerHTML = `
-                <div class="text-center py-4">
-                    <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
-                    <h4 class="mt-3 mb-2">Thank You!</h4>
-                    <p class="text-muted">Your signature has been recorded. Together we're making a difference!</p>
-                    <button type="button" class="btn btn-primary mt-3" data-bs-dismiss="modal">Close</button>
-                </div>
-            `;
-            
-            console.log('Petition signed:', data);
-        });
-    }
-});
+// Form submission handlers are now in index.html inline scripts
 
 // Intersection Observer for animations
 const observerOptions = {
