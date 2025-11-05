@@ -160,66 +160,343 @@ function showCopySuccess() {
     }, 3000);
 }
 
-// Download letter as PDF (simplified version - opens print dialog)
+// Download letter as PDF with improved formatting - Works on all devices
 function downloadLetter() {
-    // Create a printable version
+    // Show loading notification
+    const loadingNotification = document.createElement('div');
+    loadingNotification.className = 'copy-success';
+    loadingNotification.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Preparing PDF...';
+    document.body.appendChild(loadingNotification);
+    
+    // Try modern approach first (html2canvas + jsPDF)
+    if (typeof html2canvas !== 'undefined' && typeof jspdf !== 'undefined') {
+        generatePDFWithLibrary();
+    } else {
+        // Fallback to print dialog method
+        generatePDFWithPrint();
+    }
+    
+    // Remove loading notification
+    setTimeout(() => {
+        loadingNotification.remove();
+    }, 1000);
+}
+
+// Method 1: Generate PDF using jsPDF and html2canvas (better for mobile)
+function generatePDFWithLibrary() {
+    const { jsPDF } = window.jspdf;
+    
+    // Create a clean version of the letter for PDF
     const letterContent = document.getElementById('letterContent').cloneNode(true);
-    const printWindow = window.open('', '_blank');
+    
+    // Remove buttons and interactive elements
+    const buttons = letterContent.querySelectorAll('button');
+    buttons.forEach(btn => btn.remove());
+    
+    // Remove the address section (Where to send)
+    const addressSection = letterContent.querySelector('.letter-address');
+    if (addressSection) {
+        addressSection.remove();
+    }
+    
+    // Create temporary container with minimal styling for one page
+    const tempContainer = document.createElement('div');
+    tempContainer.style.position = 'absolute';
+    tempContainer.style.left = '-9999px';
+    tempContainer.style.width = '185mm'; // A4 width minus margins (210mm - 25mm)
+    tempContainer.style.padding = '0';
+    tempContainer.style.background = 'white';
+    tempContainer.style.fontFamily = 'Times New Roman, Georgia, serif';
+    tempContainer.style.fontSize = '10pt';
+    tempContainer.style.lineHeight = '1.4';
+    tempContainer.style.color = '#000';
+    
+    // Apply compact styles to letter elements
+    const letterTo = letterContent.querySelector('.letter-to');
+    const letterSubject = letterContent.querySelector('.letter-subject');
+    const letterSalutation = letterContent.querySelector('.letter-salutation');
+    const letterContentDiv = letterContent.querySelector('.letter-content');
+    const letterClosing = letterContent.querySelector('.letter-closing');
+    const signatureFields = letterContent.querySelector('.signature-fields');
+    
+    if (letterTo) letterTo.style.marginBottom = '0.8rem';
+    if (letterSubject) {
+        letterSubject.style.marginBottom = '0.8rem';
+        letterSubject.style.padding = '0.4rem';
+    }
+    if (letterSalutation) letterSalutation.style.marginBottom = '0.6rem';
+    if (letterContentDiv) {
+        letterContentDiv.style.marginBottom = '0.8rem';
+        const paragraphs = letterContentDiv.querySelectorAll('p');
+        paragraphs.forEach(p => p.style.marginBottom = '0.6rem');
+    }
+    if (letterClosing) letterClosing.style.marginBottom = '0.8rem';
+    if (signatureFields) {
+        signatureFields.style.marginTop = '0.8rem';
+        signatureFields.style.padding = '0.8rem';
+        const formFields = signatureFields.querySelectorAll('.form-field');
+        formFields.forEach(field => {
+            field.style.marginBottom = '0.5rem';
+            const label = field.querySelector('label');
+            if (label) label.style.fontSize = '9pt';
+        });
+    }
+    
+    tempContainer.appendChild(letterContent);
+    document.body.appendChild(tempContainer);
+    
+    // Generate PDF
+    html2canvas(tempContainer, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+    }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        // 0.5 inch margins = 12.7mm
+        const margin = 12.7;
+        const imgWidth = 210 - (margin * 2); // A4 width minus margins
+        const pageHeight = 297 - (margin * 2); // A4 height minus margins
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        
+        // Add image with margins
+        pdf.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
+        
+        // Only add second page if absolutely necessary
+        if (imgHeight > pageHeight) {
+            const remainingHeight = imgHeight - pageHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', margin, margin - pageHeight, imgWidth, imgHeight);
+        }
+        
+        // Download the PDF
+        pdf.save('Letter_to_PNMC_Pen4PAY.pdf');
+        
+        // Clean up
+        document.body.removeChild(tempContainer);
+        
+        // Show success notification
+        showCopySuccess('PDF downloaded successfully!');
+    }).catch(error => {
+        console.error('PDF generation failed:', error);
+        document.body.removeChild(tempContainer);
+        // Fallback to print method
+        generatePDFWithPrint();
+    });
+}
+
+// Method 2: Fallback print dialog method (works everywhere)
+function generatePDFWithPrint() {
+    const letterContent = document.getElementById('letterContent').cloneNode(true);
+    
+    // Remove buttons and interactive elements
+    const buttons = letterContent.querySelectorAll('button');
+    buttons.forEach(btn => btn.remove());
+    
+    // Remove the address section (Where to send)
+    const addressSection = letterContent.querySelector('.letter-address');
+    if (addressSection) {
+        addressSection.remove();
+    }
+    
+    const printWindow = window.open('', '_blank', 'width=800,height=600');
+    
+    if (!printWindow) {
+        alert('Please allow pop-ups to download the PDF. Then try again.');
+        return;
+    }
     
     printWindow.document.write(`
         <!DOCTYPE html>
-        <html>
+        <html lang="en">
         <head>
-            <title>Letter to PNMC - Pen4PAY</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Letter to PNMC - Pen4PAY Campaign</title>
             <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                
                 body {
-                    font-family: 'Times New Roman', serif;
-                    padding: 2cm;
-                    line-height: 1.8;
+                    font-family: 'Times New Roman', 'Georgia', serif;
+                    padding: 0;
+                    margin: 1.27cm;
+                    line-height: 1.4;
                     color: #000;
+                    background: #fff;
+                    font-size: 10pt;
                 }
-                .letter-to, .letter-subject, .letter-salutation, 
-                .letter-content, .letter-closing, .letter-address {
-                    margin-bottom: 1.5rem;
+                
+                .letter-to {
+                    margin-bottom: 0.8rem;
+                    line-height: 1.3;
                 }
+                
+                .letter-to strong {
+                    display: block;
+                    margin-bottom: 0.2rem;
+                    font-size: 10.5pt;
+                }
+                
+                .letter-subject {
+                    margin-bottom: 0.8rem;
+                    padding: 0.4rem;
+                    background: rgba(0, 102, 255, 0.05);
+                    border-left: 3px solid #0066FF;
+                }
+                
+                .letter-subject strong {
+                    font-size: 10.5pt;
+                }
+                
+                .letter-salutation {
+                    margin-bottom: 0.6rem;
+                    font-size: 10.5pt;
+                }
+                
+                .letter-content {
+                    margin-bottom: 0.8rem;
+                }
+                
                 .letter-content p {
-                    margin-bottom: 1rem;
+                    margin-bottom: 0.6rem;
                     text-align: justify;
+                    line-height: 1.4;
                 }
-                .alert {
-                    border: 2px solid #0066FF;
-                    padding: 1rem;
-                    margin-top: 2rem;
+                
+                .letter-closing {
+                    margin-bottom: 0.8rem;
                 }
-                .field-line {
-                    border-bottom: 1px solid #000;
-                    min-height: 30px;
-                    margin: 0.5rem 0;
+                
+                .signature-fields {
+                    margin-top: 0.8rem;
+                    padding: 0.8rem;
+                    background: #f8f9fa;
+                    border-radius: 6px;
                 }
+                
                 .form-field {
-                    margin: 1rem 0;
+                    margin-bottom: 0.5rem;
                 }
+                
+                .form-field label {
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 0.15rem;
+                    font-size: 9pt;
+                }
+                
+                .field-line {
+                    border-bottom: 1px solid #333;
+                    padding: 0.25rem 0;
+                    min-height: 22px;
+                }
+                
                 .row {
                     display: flex;
                     flex-wrap: wrap;
-                    margin: 0 -15px;
+                    margin: 0 -0.75rem;
                 }
+                
                 .col-md-6 {
                     flex: 0 0 50%;
-                    padding: 0 15px;
+                    max-width: 50%;
+                    padding: 0 0.75rem;
                 }
+                
+                .letter-address {
+                    margin-top: 2rem;
+                    padding: 1.5rem;
+                    background: #f0f9ff;
+                    border: 2px solid #0066FF;
+                    border-radius: 8px;
+                }
+                
+                .letter-address strong {
+                    font-size: 12pt;
+                    display: block;
+                    margin-bottom: 0.5rem;
+                }
+                
+                .letter-address a {
+                    color: #0066FF;
+                    text-decoration: none;
+                    font-weight: 600;
+                }
+                
+                .alert {
+                    padding: 0;
+                    background: transparent;
+                    border: none;
+                }
+                
+                .alert i {
+                    display: none;
+                }
+                
+                /* Print-specific styles */
                 @media print {
-                    body { padding: 1cm; }
+                    body {
+                        padding: 0;
+                        margin: 1.27cm;
+                    }
+                    
+                    .signature-fields {
+                        background: transparent;
+                        page-break-inside: avoid;
+                    }
+                    
+                    .letter-address {
+                        display: none;
+                    }
+                    
+                    @page {
+                        margin: 1.27cm;
+                        size: A4 portrait;
+                    }
+                }
+                
+                /* Mobile responsive */
+                @media screen and (max-width: 768px) {
+                    body {
+                        padding: 1cm;
+                        font-size: 11pt;
+                    }
+                    
+                    .col-md-6 {
+                        flex: 0 0 100%;
+                        max-width: 100%;
+                    }
+                    
+                    .letter-subject,
+                    .signature-fields,
+                    .letter-address {
+                        padding: 1rem;
+                    }
                 }
             </style>
         </head>
         <body>
             ${letterContent.innerHTML}
             <script>
+                // Auto-print on load
                 window.onload = function() {
-                    window.print();
-                    setTimeout(() => window.close(), 100);
-                }
+                    // Small delay to ensure content is rendered
+                    setTimeout(function() {
+                        window.print();
+                    }, 250);
+                };
+                
+                // Optional: Close window after printing
+                window.onafterprint = function() {
+                    // Uncomment to auto-close after printing
+                    // setTimeout(() => window.close(), 500);
+                };
             </script>
         </body>
         </html>
@@ -228,68 +505,7 @@ function downloadLetter() {
     printWindow.document.close();
 }
 
-// Quick send form handler
-document.addEventListener('DOMContentLoaded', function() {
-    const quickSendForm = document.getElementById('quickSendForm');
-    if (quickSendForm) {
-        quickSendForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const name = this.querySelector('input[placeholder="Your Full Name"]').value;
-            const email = this.querySelector('input[placeholder="Your Email"]').value;
-            const province = this.querySelector('input[placeholder="Province"]').value;
-            const district = this.querySelector('input[placeholder="District"]').value;
-            const institution = this.querySelector('input[placeholder="Institution"]').value;
-            
-            // Create mailto link with pre-filled content
-            const subject = 'Request for Paid Internship for Nursing Students';
-            const body = `To:
-The Registrar,
-Pakistan Nursing & Midwifery Council (PNMC),
-Islamabad.
-
-Subject: Request for Paid Internship for Nursing Students
-
-Respected Sir/Madam,
-
-We, the nursing students of Sindh, request the implementation of a paid internship policy for all nursing interns. According to the Internship Policy 2021, every trainee nurse should receive a stipend equal to the basic pay of BPS-16 during the training period.
-
-However, we currently receive no stipend. We kindly request PNMC to take action and, as the regulatory body, ensure the enforcement of this policy so that stipends are granted to all nursing interns — from both public and private institutions — in recognition of their hard work and dedicated service.
-
-With respect,
-
-${name}
-Nursing Student
-Province: ${province}
-District: ${district}
-Institution: ${institution}
-Email: ${email}
-Date: ${new Date().toLocaleDateString()}
-
----
-Sent via Pen4PAY Campaign
-`;
-            
-            // Open email client with both PNMC emails
-            const mailtoLink = `mailto:info@pnmc.org.pk,registrar@pnmc.org.pk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.location.href = mailtoLink;
-            
-            // Show success message
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Opening Email Client...';
-            submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                showCopySuccess();
-            }, 3000);
-        });
-    }
-});
+// Quick send form handler is now in index.html inline scripts
 
 console.log('Pen4PAY - Fighting for nursing justice in Sindh 💙');
 
